@@ -41,20 +41,22 @@ void ordina_pizze(struct codaclienti_t *codaclienti, int numeropizze, int client
 
    
     sem_wait(&codaclienti->mutex);
-    codaclienti->state = PIZZE_PENDENTI;
+    codaclienti->state == PIZZE_PENDENTI;
     codaclienti->ordine_clienti[cliente] = numeropizze;
     printf("il cliente %d ordina %d pizze \n \n",cliente,numeropizze);
     if(codaclienti->ordine_clienti[codaclienti->turno] > codaclienti->ordine_clienti[cliente] || codaclienti->turno > 9){
        codaclienti->turno = cliente;
        printf("E' IL TURNO DI %d \n \n", cliente);
     }
-   
+    
     // NON HO RILASCIATO UN MUTEX--------------
     sem_post(&codaclienti->mutex);
     // ----MUTEX NON RISLASCIATO SOPRA----------
-
+    
+    
+    
     sem_post(&codaclienti->sem_pizzaiolo);
-
+    
 }
 
 void prossima_pizza(struct codaclienti_t *codaclienti){
@@ -101,6 +103,7 @@ void ritira_pizze(struct  codaclienti_t *codaclienti, int cliente){
             codaclienti->turno = i;
             printf("E' IL TURNO DI %d \n \n",i);
     }
+    
     }
     sem_post(&codaclienti->mutex);      
     sem_post(&codaclienti->sem_cliente[codaclienti->turno]);
